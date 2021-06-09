@@ -49,7 +49,9 @@ def video_feed_detection():
 @app.route("/get_detection")
 def summary():
     global detections
-    return jsonify(detections)
+    response = flask.jsonify(detections)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 def gen_frames():
     H=None
