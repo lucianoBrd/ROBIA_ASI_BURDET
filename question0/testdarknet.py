@@ -5,7 +5,7 @@ import cv2
 
 
 
-INPUT_FILE='voitures.mp4' # peut etre une video ou un flux par exemple http://192.168.1.189/video.mjpg
+INPUT_FILE='http://127.0.0.1:5000/video_feed' # peut etre une video ou un flux par exemple http://192.168.1.189/video.mjpg
 OUTPUT_FILE='output.avi'
 LABELS_FILE='coco.names'
 CONFIG_FILE='yolov3-tiny.cfg'
