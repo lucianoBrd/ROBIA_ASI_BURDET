@@ -22,14 +22,15 @@ def gen_frames():
     while True:
         try:
             (grabbed, frame) = vs.read()
+            ret, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
         except:
-            break
+            vs = cv2.VideoCapture(INPUT_FILE)
 
-        ret, buffer = cv2.imencode('.jpg', frame)
-        frame = buffer.tobytes()
-        yield (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+        
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="127.0.0.1", port=5001)
