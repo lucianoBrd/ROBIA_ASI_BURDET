@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, request
 import cv2
 import numpy as np
 import time
@@ -33,6 +33,15 @@ def index():
     return render_template('index.html')
 
 #--------------------------------------------API--------------------------------------------------
+## Utilise paramètres GET nomé flux exemple d'appel : /change_flux?flux=http://127.0.0.1:5001/video_feed
+@app.route('/change_flux')
+def change_flux():
+    flux = request.args.get("flux")
+    global vs
+    vs.release()
+    vs = cv2.VideoCapture(flux)
+    return flux
+
 @app.route('/video_feed_detection')
 def video_feed_detection():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
